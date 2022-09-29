@@ -3,6 +3,8 @@ import 'package:testapp/main.dart';
 import 'package:testapp/palette.dart';
 import 'package:testapp/newscreen.dart';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 
 class NewScreen extends StatelessWidget {
   @override
@@ -35,12 +37,9 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 1;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  
+   int _page = 2;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +52,30 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ),
       //   ),
       // ),
+bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: 2,
+          height: 60.0,
+          items: <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.compare_arrows, size: 30),
+            Icon(Icons.call_split, size: 30),
+            Icon(Icons.perm_identity, size: 30),
+          ],
+          color: Colors.white,
+          buttonBackgroundColor: Colors.white,
+          backgroundColor: Color(0xEAEAE3E3),
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
+          letIndexChange: (index) => true,
+        ),
+
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -90,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(bottom: 150.0),
             ),
             const Text(
-              'THIS IS A NEW SCREEN',
+              'THIS IS A NEW SCREEEEEEEEEEEEEEEEEEEEEN',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18.0, color: Colors.purple),
             ),
@@ -272,25 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[BottomNavigationBarItem(
-            icon: Icon(Icons.network_check),
-            label: 'Studio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper),
-            label: 'News',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+    
     );
     
   }

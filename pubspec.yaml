@@ -37,6 +37,7 @@ dependencies:
   url_launcher: ^6.1.5
   radio_player: ^1.0.1
   flutter_spinkit: ^5.1.0
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:

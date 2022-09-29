@@ -3,6 +3,8 @@ import 'package:testapp/palette.dart';
 import 'dart:math' show pi;
 import 'package:radio_player/radio_player.dart';
 import 'package:testapp/newscreen.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -114,6 +116,7 @@ class _PlayButtonState extends State<PlayButton> with TickerProviderStateMixin {
     _rotationController.dispose();
     super.dispose();
   }
+ 
 }
 
 class Blob extends StatelessWidget {
@@ -172,12 +175,9 @@ void _navigateToNextScreen(BuildContext context) {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+ //selected page key for navbar
+ int _page = 0;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   RadioPlayer _radioPlayer = RadioPlayer();
   bool isPlaying = false;
@@ -220,6 +220,36 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ),
       //   ),
       // ),
+
+
+// navbar 
+      bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: 0,
+          height: 60.0,
+          items: <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.compare_arrows, size: 30),
+            Icon(Icons.call_split, size: 30),
+            Icon(Icons.perm_identity, size: 30),
+          ],
+          color: Colors.white,
+          buttonBackgroundColor: Colors.white,
+          backgroundColor: Color(0xEAEAE3E3),
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: (index) {
+            setState(() {
+              _page = index;
+            });
+          },
+          letIndexChange: (index) => true,
+        ),
+
+
+
+
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -436,27 +466,6 @@ ButtonBar(
             //BUTTON
 ],
         ),
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.network_check),
-            label: 'Studio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper),
-            label: 'News',
-          ),
-        ],
-        
       ),
 
       // floatingActionButton: FloatingActionButton(
